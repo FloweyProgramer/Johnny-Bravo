@@ -61,7 +61,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.10;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -71,6 +71,7 @@ class MainMenuState extends MusicBeatState
 			{
 				bg.antialiasing = true;
 			}
+		bg.color = FlxColor.fromRGB(255, 234, 113);
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);

@@ -53,6 +53,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		
+
 		#if polymod
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
@@ -69,7 +71,7 @@ class TitleState extends MusicBeatState
 		
 		#if !cpp
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('JohnnyBravo', 'Flowerbear');
 
 		PlayerSettings.init();
 

@@ -236,6 +236,8 @@ class PlayState extends MusicBeatState
 	var inCutscene:Bool = false;
 	var usedTimeTravel:Bool = false;
 
+	var fnfLogo:FlxSprite;
+
 	public static var repPresses:Int = 0;
 	public static var repReleases:Int = 0;
 
@@ -1187,6 +1189,10 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
 
+		fnfLogo = new FlxSprite(850, -250).loadGraphic(Paths.image('fnf_logo'));
+		fnfLogo.scale.set(0.25, 0.25);
+		add(fnfLogo);
+
 		if (PlayStateChangeables.useDownscroll)
 			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
 
@@ -1238,6 +1244,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		fnfLogo.cameras = [camHUD];
 		if (FlxG.save.data.songPosition)
 		{
 			songPosBG.cameras = [camHUD];
@@ -4471,6 +4478,9 @@ class PlayState extends MusicBeatState
 					dad.playAnim('danceRight', true);
 			}
 		}
+
+		if (!dad.animation.curAnim.name.startsWith('sing'))
+			dad.dance();
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
