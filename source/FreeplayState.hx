@@ -179,8 +179,9 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = FlxG.save.data.antialiasing;
+		bg.color = FlxColor.fromRGB(146, 113, 253);
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

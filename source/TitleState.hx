@@ -126,21 +126,20 @@ class TitleState extends MusicBeatState
 	{
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(75, 143, 204));
 		// bg.antialiasing = FlxG.save.data.antialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
 
-		if (Main.watermarks) {
-			logoBl = new FlxSprite(-150, 1500);
-			logoBl.frames = Paths.getSparrowAtlas('KadeEngineLogoBumpin');
-		} else {
-			logoBl = new FlxSprite(-150, -100);
-			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		}
+		
+		
+		logoBl = new FlxSprite(-150, -15
+			0);
+		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		
 		logoBl.antialiasing = FlxG.save.data.antialiasing;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logoBl.animation.addByPrefix('bump', 'bumping idle', 24, false);
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -175,7 +174,7 @@ class TitleState extends MusicBeatState
 		add(credGroup);
 		textGroup = new FlxGroup();
 
-		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(75, 143, 204));
 		credGroup.add(blackScreen);
 
 		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
@@ -370,8 +369,9 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-		logoBl.animation.play('bump', true);
+		if (curBeat % 2 == 0)
+			logoBl.animation.play('bump', true);
+		
 		danceLeft = !danceLeft;
 
 		if (danceLeft)
@@ -386,7 +386,7 @@ class TitleState extends MusicBeatState
 			case 0:
 				deleteCoolText();
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+				createCoolText(['Karma', 'Flowerbear', 'ItsYeshalot', 'ASpacedOutFlower']);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
@@ -398,19 +398,16 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
-				if (Main.watermarks)
-					createCoolText(['Kade Engine', 'by']);
-				else
-					createCoolText(['In Partnership', 'with']);
+				
+				
+				createCoolText(['Newgrounds logo', 'because']);
 			case 7:
-				if (Main.watermarks)
-					addMoreText('KadeDeveloper');
-				else
-				{
-					addMoreText('Newgrounds');
-					ngSpr.visible = true;
-				}
-			// credTextShit.text += '\nNewgrounds';
+				
+				
+				addMoreText('im lazy');
+				ngSpr.visible = true;
+				
+			// crdTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;
@@ -430,13 +427,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('FNF');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('Johnny');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Bravo'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();

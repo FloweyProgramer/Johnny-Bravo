@@ -1226,6 +1226,8 @@ class PlayState extends MusicBeatState
 
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
+		if(SONG.player2.startsWith('johnny'))
+			iconP2.y = healthBar.y - ((iconP2.height / 4) * 3);
 		add(iconP2);
 
 		strumLineNotes.cameras = [camHUD];
@@ -2465,7 +2467,7 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset - (SONG.player2.startsWith('johnny') ? 30 : 0));
 
 		if (health > 2)
 			health = 2;
@@ -4596,7 +4598,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (!dad.animation.curAnim.name.startsWith('sing'))
+		if (!dad.animation.curAnim.name.startsWith('sing') && curBeat % 2 == 0)
 			dad.dance();
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
