@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.FlxBasic;
@@ -15,12 +16,14 @@ class Stage
     public var hideLastBG:Bool = false; // True = hide last BG and show ones from slowBacks on certain step, False = Toggle Visibility of BGs from SlowBacks on certain step
     public var tweenDuration:Float = 2; // How long will it tween hiding/showing BGs, variable above must be set to True for tween to activate
     public var toAdd:Array<Dynamic> = []; // Add BGs on stage startup, load BG in by using "toAdd.push(bgVar);"
+	public var toAddSecondary:Array<Dynamic> = [];
     // Layering algorithm for noobs: Everything loads by the method of "On Top", example: You load wall first(Every other added BG layers on it), then you load road(comes on top of wall and doesn't clip through it), then loading street lights(comes on top of wall and road)
     public var swagBacks:Map<String, Dynamic> = []; // Store BGs here to use them later in PlayState or when slowBacks activate
     public var swagGroup:Map<String, FlxTypedGroup<Dynamic>> = []; //Store Groups
     public var animatedBacks:Array<FlxSprite> = []; // Store animated backgrounds and make them play animation(Animation must be named Idle!! Else use swagGroup)
     public var layInFront:Array<Array<FlxSprite>> = [[], [], []]; // BG layering, format: first [0] - in front of GF, second [1] - in front of opponent, third [2] - in front of boyfriend(and techincally also opponent since Haxe layering moment)
     public var slowBacks:Map<Int, Array<FlxSprite>> = []; // Change/add/remove backgrounds mid song! Format: "slowBacks[StepToBeActivated] = [Sprites,To,Be,Changed,Or,Added];"
+	var shakeTimer:FlxTimer;
 
     public function new(daStage:String)
     {
@@ -395,7 +398,7 @@ class Stage
 							add(waveSpriteFG);
 						 */
 					}
-				default:
+				case 'stage':
 					{
 						camZoom = 0.9;
 						curStage = 'stage';
@@ -424,6 +427,103 @@ class Stage
 
 						swagBacks['stageCurtains'] = stageCurtains;
                         toAdd.push(stageCurtains);
+					}
+				case 'plane':
+					{
+						curStage = 'plane';
+
+						var sky:FlxSprite = new FlxSprite().loadGraphic(Paths.image('nevada', 'johnny'));
+						sky.setGraphicSize(Std.int(sky.width * (720/1400)));
+						sky.updateHitbox();
+						sky.antialiasing = FlxG.save.data.antialiasing;
+						sky.scrollFactor.set(1, 1);
+						sky.active = false;
+						swagBacks['sky'] = sky;
+						toAdd.push(sky);
+
+						var interior:FlxSprite = new FlxSprite().loadGraphic(Paths.image('plane2', 'johnny'));
+						interior.setGraphicSize(Std.int(interior.width * (720/1400)));
+						interior.updateHitbox();
+						interior.antialiasing = FlxG.save.data.antialiasing;
+						interior.scrollFactor.set(1, 1);
+						interior.active = false;
+						swagBacks['interior'] = interior;
+						interior.cameras = [PlayState.camPlane];
+						toAddSecondary.push(interior);
+
+						var plane:FlxSprite = new FlxSprite();
+						plane.frames = Paths.getSparrowAtlas('plane', 'johnny');
+						plane.animation.addByPrefix('idle', 'shaking idle', 24, true);
+						plane.setGraphicSize(Std.int(plane.width * (720/734)));
+						plane.updateHitbox();
+						plane.animation.play('idle');
+						plane.antialiasing = FlxG.save.data.antialiasing;
+						plane.scrollFactor.set(1, 1);
+						plane.active = true;
+						swagBacks['plane'] = plane;
+						toAdd.push(plane);
+						shakeTimer = new FlxTimer().start(1/24, function(swagTimer:FlxTimer){
+							if(!PlayState.pubPause)
+							{PlayState.shakePoint.set(FlxG.random.float(-10, 10), FlxG.random.float(-10, 10));
+							plane.setPosition(PlayState.shakePoint.x, PlayState.shakePoint.y);}
+						}, 0);
+
+
+
+						var smoke:FlxSprite = new FlxSprite(-100);
+						smoke.frames = Paths.getSparrowAtlas('divider', 'johnny');
+						smoke.animation.addByPrefix('idle', 'plane idle', 24, true);
+						smoke.setGraphicSize(Std.int(smoke.width * (720/1404)));
+						smoke.updateHitbox();
+						smoke.animation.play('idle');
+						smoke.antialiasing = FlxG.save.data.antialiasing;
+						smoke.scrollFactor.set(1, 1);
+						smoke.active = true;
+						swagBacks['smoke'] = smoke;
+						toAdd.push(smoke);
+						// toAddSecondary.push(smoke);
+
+
+						var smoke2:FlxSprite = new FlxSprite(1180);
+						smoke2.frames = Paths.getSparrowAtlas('divider', 'johnny');
+						smoke2.animation.addByPrefix('idle', 'plane idle', 24, true);
+						smoke2.setGraphicSize(Std.int(smoke2.width * (720/1404)));
+						smoke2.updateHitbox();
+						smoke2.animation.play('idle');
+						smoke2.antialiasing = FlxG.save.data.antialiasing;
+						smoke2.scrollFactor.set(1, 1);
+						smoke2.active = true;
+						swagBacks['smoke2'] = smoke2;
+						smoke2.cameras = [PlayState.camPlane];
+						toAdd.push(smoke2);
+
+					}
+				default:
+					{
+						camZoom = 0.7;
+						curStage = 'park';
+
+						var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('bench', 'johnny'));
+						bg.setGraphicSize(Std.int(bg.width * 1.05));
+						bg.updateHitbox();
+						bg.antialiasing = FlxG.save.data.antialiasing;
+						bg.scrollFactor.set(1, 1);
+						bg.active = false;
+						swagBacks['bg'] = bg;
+						toAdd.push(bg);
+
+						var radio:FlxSprite = new FlxSprite(375, 375);
+						radio.frames = Paths.getSparrowAtlas('radio', 'johnny');
+						radio.animation.addByPrefix('idle', 'bumpin idle', 24, false);
+						radio.setGraphicSize(Std.int(radio.width * 0.2));
+						radio.updateHitbox();
+						radio.antialiasing = FlxG.save.data.antialiasing;
+						radio.scrollFactor.set(1, 1);
+						swagBacks['radio'] = radio;
+						toAdd.push(radio);
+						animatedBacks.push(radio);
+
+
 					}
         }
     }

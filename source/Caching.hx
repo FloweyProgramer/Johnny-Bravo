@@ -1,4 +1,4 @@
-#if sys
+
 package;
 
 import lime.app.Application;

@@ -39,7 +39,7 @@ class AnimationDebug extends FlxState
 		gridBG.scrollFactor.set(0.5, 0.5);
 		add(gridBG);
 
-		if (daAnim == 'bf')
+		if (daAnim == 'bf' || daAnim == 'tricky')
 			isDad = false;
 
 		if (isDad)
@@ -54,13 +54,13 @@ class AnimationDebug extends FlxState
 		}
 		else
 		{
-			bf = new Boyfriend(0, 0);
+			bf = new Boyfriend(0, 0, daAnim);
 			bf.screenCenter();
 			bf.debugMode = true;
 			add(bf);
 
 			char = bf;
-			bf.flipX = false;
+			bf.flipX = (bf.curCharacter == 'tricky');
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();

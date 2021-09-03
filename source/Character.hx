@@ -50,6 +50,26 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				case 'gf-radio':
+					// GIRLFRIEND CODE
+					tex = Paths.getSparrowAtlas('GF_radio','shared',true);
+					frames = tex;
+					animation.addByPrefix('cheer', 'GF Cheer', 24, false);
+					animation.addByPrefix('singLEFT', 'GF left note', 24, false);
+					animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
+					animation.addByPrefix('singUP', 'GF Up Note', 24, false);
+					animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+					animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+					animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+					animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+					animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+					animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
+					animation.addByPrefix('scared', 'GF FEAR', 24);
+	
+					loadOffsetFile(curCharacter);
+	
+					playAnim('danceRight');
+
 			case 'gf-christmas':
 				tex = Paths.getSparrowAtlas('gfChristmas','shared',true);
 				frames = tex;
@@ -381,13 +401,30 @@ class Character extends FlxSprite
 
 			case 'johnny':
 				frames = Paths.getSparrowAtlas('johnny', 'shared', true);
-				animation.addByPrefix('idle', 'casualjohnny idle', 24, false);
+				animation.addByPrefix('idle', 'casualjohnny idle', 12, false);
 				animation.addByPrefix('singUP', 'casualjohnny up', 24, false);
 				animation.addByPrefix('singRIGHT', 'casualjohnny right', 24, false);
 				animation.addByPrefix('singLEFT', 'casualjohnny left', 24, false);
 				animation.addByPrefix('singDOWN', 'casualjohnny down', 24, false);
 
 				loadOffsetFile(curCharacter);
+
+				playAnim('idle');
+			
+			case 'tricky':
+				tex = Paths.getSparrowAtlas('tricky','shared', true);
+				frames = tex;
+				animation.addByPrefix('idle', 'Idle', 24);
+				animation.addByPrefix('singUP', 'Sing Up', 24);
+				animation.addByPrefix('singRIGHT', 'Sing Right', 24);
+				animation.addByPrefix('singDOWN', 'Sing Down', 24);
+				animation.addByPrefix('singLEFT', 'Sing Left', 24); 
+				
+				addOffset("idle", 0, -75);
+				addOffset("singUP", -87, -76);
+				addOffset("singRIGHT", -24, -86);
+				addOffset("singLEFT", 263, -182);
+				addOffset("singDOWN", 76, -104);
 
 				playAnim('idle');
 		}
@@ -430,7 +467,7 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if (!curCharacter.startsWith('bf') && curCharacter != 'tricky')
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{
@@ -470,7 +507,7 @@ class Character extends FlxSprite
 		{
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel':
+				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-radio':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
@@ -537,6 +574,11 @@ class Character extends FlxSprite
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
 	{
-		animOffsets[name] = [x, y];
+		if(curCharacter == 'tricky')
+			animOffsets[name] = [x/3, y/3];
+		else if(curCharacter == 'johnny' && PlayState.SONG.song.toLowerCase() == 'madness')
+			animOffsets[name] = [x*0.65, y*0.65];
+		else
+			animOffsets[name] = [x, y];
 	}
 }

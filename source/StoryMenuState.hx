@@ -27,7 +27,7 @@ class StoryMenuState extends MusicBeatState
 	static function weekData():Array<Dynamic>
 	{
 		return [
-			['diagraphephobia'],
+			['rejection'],
 		];
 	}
 	var curDifficulty:Int = 1;

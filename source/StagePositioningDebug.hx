@@ -48,6 +48,8 @@ class StagePositioningDebug extends FlxState
 
 		Stage = PlayState.Stage;
 
+		
+
 		gf = PlayState.gf;
 		boyfriend = PlayState.boyfriend;
 		dad = PlayState.dad;
@@ -150,8 +152,8 @@ class StagePositioningDebug extends FlxState
 					curCharString = opponent;
 			}
 		}
-
-		if (FlxG.mouse.pressed && curChar.pixelsOverlapPoint(FlxG.mouse.getPosition()) && !dragging)
+//&& curChar.pixelsOverlapPoint(FlxG.mouse.getPosition())
+		if (FlxG.mouse.pressed && !dragging)
 		{
 			dragging = true;
 			updateMousePos();
