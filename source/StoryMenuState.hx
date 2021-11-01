@@ -362,8 +362,9 @@ class StoryMenuState extends MusicBeatState
 			PlayState.campaignScore = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
-			});
+				//LoadingState.loadAndSwitchState(new PlayState(), true);
+				LoadingState.loadAndSwitchState(new MP4VideoState('johnny_cutscene_2_8_', new PlayState()));
+			}); 
 		}
 	}
 

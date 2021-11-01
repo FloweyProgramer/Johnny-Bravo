@@ -555,10 +555,13 @@ class PlayState extends MusicBeatState
 		}
 
 		
-		if(SONG.song.toLowerCase()!='madness')
+		if(SONG.song.toLowerCase()!='madness' && SONG.song.toLowerCase() != 'rejection')
 			boyfriend = new Boyfriend(770, 450, SONG.player1);
-		else
+		else if(SONG.song.toLowerCase() != 'rejection')
 			boyfriend = new Boyfriend(189, -112, 'tricky');
+		else
+			boyfriend = new Boyfriend(189, -112, 'gf-playable');
+
 
 		if (boyfriend.frames == null)
 		{
@@ -591,6 +594,8 @@ class PlayState extends MusicBeatState
 			{
 				if(SONG.song.toLowerCase() == 'madness')
 					Stage = new Stage('plane');
+				else if(SONG.song.toLowerCase() == 'rejection')
+					Stage = new Stage('concert');
 				else
 					Stage = new Stage(SONG.stage);
 				for (i in Stage.toAddSecondary)
@@ -699,6 +704,8 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			case 'johnny-bravo':
+				camPos.set(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y + 100);
 		}
 
 		// REPOSITIONING PER STAGE
@@ -743,6 +750,11 @@ class PlayState extends MusicBeatState
 				dad.updateHitbox();
 				dad.x += 400;
 				dad.y -= 50;
+			case 'concert':
+				gf.visible = false;
+				boyfriend.setPosition(1464, 520);
+				dad.setPosition(-264, 335);
+
 		}
 
 		if (loadRep)
@@ -931,7 +943,9 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		if(FlxG.save.data.colour)
+		if(FlxG.save.data.colour && SONG.song.toLowerCase() == 'madness')
+			healthBar.createFilledBar(0xFFFFD800, 0xFF185F40);
+		else if(SONG.song.toLowerCase() != 'madness')
         {
          switch (SONG.player2)
            {
@@ -949,6 +963,10 @@ class PlayState extends MusicBeatState
               healthBar.createFilledBar(0xFFF76D6D, 0xFF0097C4);
              case 'spirit':
               healthBar.createFilledBar(0xFFAD0505, 0xFF0097C4);
+			 case 'johnny':
+			  healthBar.createFilledBar(0xFFFFD800, 0xFF0097C4);
+			 case 'johnny-bravo':
+			  healthBar.createFilledBar(0xFFFFD800, 0xFFA5004D);
             }
         }
         else
@@ -2728,6 +2746,8 @@ class PlayState extends MusicBeatState
 						case 'senpai' | 'senpai-angry':
 							camFollow.y = dad.getMidpoint().y - 430;
 							camFollow.x = dad.getMidpoint().x - 100;
+						// case 'johnny-bravo':
+						// 	camFollow.x = dad.getGraphicMidpoint().x + 200;
 					}
 				}
 				else{
@@ -2783,6 +2803,8 @@ class PlayState extends MusicBeatState
 						case 'schoolEvil':
 							camFollow.x = boyfriend.getMidpoint().x - 200;
 							camFollow.y = boyfriend.getMidpoint().y - 200;
+						case 'concert':
+							camFollow.x = boyfriend.getMidpoint().x - 200;
 					}
 				}
 				else{
@@ -4349,7 +4371,7 @@ class PlayState extends MusicBeatState
 
 
 			// Hole switch statement replaced with a single line :)
-			if(boyfriend.curCharacter.startsWith('bf'))
+			if(boyfriend.curCharacter.startsWith('bf') || boyfriend.curCharacter == 'gf-playable')
 				boyfriend.playAnim('sing' + dataSuffix[direction] + 'miss', true);
 
 			#if cpp
@@ -4773,6 +4795,19 @@ class PlayState extends MusicBeatState
 				camHUD.zoom += 0.03 / songMultiplier;
 			}
 		}
+
+		if (SONG.song.toLowerCase() == 'rejection'){
+			switch curBeat
+			{
+				case 291:
+					fnfLogo.visible = false;
+					Stage.swagBacks['signal'].visible = true;
+				case 296:
+					fnfLogo.visible = true;
+					Stage.swagBacks['signal'].visible = false;
+			}
+		}
+
 		if (Conductor.bpm < 340)
 		{
 			iconP1.setGraphicSize(Std.int(iconP1.width + 30));

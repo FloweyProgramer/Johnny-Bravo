@@ -142,7 +142,7 @@ class ChartingState extends MusicBeatState
 
 	override function create()
 	{
-		curSection = lastSection;
+	curSection = lastSection;
 
 		trace(1 > Math.POSITIVE_INFINITY);
 
@@ -1407,7 +1407,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (ii.startTime <= strum && ii.endTime > strum)
 					{
-						trace("new strum " + strum + " - at section " + section);
+					//	trace("new strum " + strum + " - at section " + section);
 						// alright we're in this section lets paste the note here.
 						var newData = [strum,i[1],i[2],i[3],i[4]];
 						ii.sectionNotes.push(newData);
@@ -1443,7 +1443,7 @@ class ChartingState extends MusicBeatState
 									
 								curRenderedSustains.add(sustainVis);
 							}
-						trace("section new length: " + ii.sectionNotes.length);
+					//	trace("section new length: " + ii.sectionNotes.length);
 						continue;
 					}
 					section++;
@@ -2029,7 +2029,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (i.overlaps(selectBox) && !i.charterSelected)
 					{
-						trace("seleting " + i.strumTime);
+					//	trace("seleting " + i.strumTime);
 						selectNote(i, false);
 					}
 				}
@@ -2086,7 +2086,7 @@ class ChartingState extends MusicBeatState
 						for(i in copiedNotes) // normalize the notes
 						{
 							i[0] = i[0] - firstNote;
-							trace("Normalized time: " + i[0] + " | " + i[1]);
+			//				trace("Normalized time: " + i[0] + " | " + i[1]);
 						}
 
 						trace(copiedNotes.length);
@@ -2104,7 +2104,7 @@ class ChartingState extends MusicBeatState
 							selectedBoxes.members.remove(selectedBoxes.members[0]);
 						}
 
-						trace("Pasting " + copiedNotes.length);
+			//			trace("Pasting " + copiedNotes.length);
 	
 						pasteNotesFromArray(copiedNotes);
 

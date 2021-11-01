@@ -143,11 +143,12 @@ class TitleState extends MusicBeatState
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.14);
+		gfDance.y -= 250;
+		gfDance.frames = Paths.getSparrowAtlas('theMonkey');
+		gfDance.animation.addByPrefix('idle', 'jb idle');
 		gfDance.antialiasing = FlxG.save.data.antialiasing;
+		gfDance.setGraphicSize(Std.int(gfDance.width * 0.7));
 		add(gfDance);
 		add(logoBl);
 
@@ -221,7 +222,7 @@ class TitleState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
-			Conductor.changeBPM(102);
+			Conductor.changeBPM(130);
 			initialized = true;
 		}
 
@@ -294,7 +295,7 @@ class TitleState extends MusicBeatState
 			{
 				// Get current version of Kade Engine
 				
-				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
+				var http = new haxe.Http("untill i make a proper updatelog lmao");
 				var returnedData:Array<String> = [];
 				
 				http.onData = function (data:String)
@@ -373,10 +374,7 @@ class TitleState extends MusicBeatState
 		
 		danceLeft = !danceLeft;
 
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft');
+		gfDance.animation.play('idle');
 
 		FlxG.log.add(curBeat);
 
@@ -434,7 +432,21 @@ class TitleState extends MusicBeatState
 			case 15:
 				addMoreText('Bravo'); // credTextShit.text += '\nFunkin';
 
-			case 16:
+			case 55:
+				deleteCoolText();
+				addMoreText('Hold on');
+
+			case 58:
+				addMoreText('beatdrop incoming');
+
+			case 60:
+				deleteCoolText();
+				addMoreText('Wanna do the');
+			case 61:
+				addMoreText('monkey with me?');
+			case 63:
+				addMoreText('Come on');
+			case 64:
 				skipIntro();
 		}
 	}

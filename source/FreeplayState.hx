@@ -234,9 +234,9 @@ class FreeplayState extends MusicBeatState
 		diffText.font = scoreText.font;
 		add(diffText);
 
-		diffCalcText = new FlxText(scoreText.x, scoreText.y + 66, 0, "", 24);
-		diffCalcText.font = scoreText.font;
-		add(diffCalcText);
+		// diffCalcText = new FlxText(scoreText.x, scoreText.y + 66, 0, "", 24);
+		// diffCalcText.font = scoreText.font;
+		// add(diffCalcText);
 
 		previewtext = new FlxText(scoreText.x, scoreText.y + 94, 0, "Rate: " + rate + "x", 24);
 		previewtext.font = scoreText.font;
@@ -370,23 +370,23 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.keys.justPressed.LEFT)
 			{
 				rate -= 0.05;
-				diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+// 0				diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 			}
 			if (FlxG.keys.justPressed.RIGHT)
 			{
 				rate += 0.05;
-				diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+				// diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 			}
 
 			if (rate > 3)
 			{
 				rate = 3;
-				diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+				// diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 			}
 			else if (rate < 0.5)
 			{
 				rate = 0.5;
-				diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+				// diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 			}
 
 			previewtext.text = "Rate: " + rate + "x";
@@ -485,7 +485,7 @@ class FreeplayState extends MusicBeatState
 		intendedScore = Highscore.getScore(songHighscore, curDifficulty);
 		combo = Highscore.getCombo(songHighscore, curDifficulty);
 		#end
-		diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+		// diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 		diffText.text = CoolUtil.difficultyFromInt(curDifficulty).toUpperCase();
 	}
 
@@ -536,7 +536,7 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
+		// diffCalcText.text = 'RATING: ${DiffCalc.CalculateDiff(songData.get(songs[curSelected].songName)[curDifficulty])}';
 		diffText.text = CoolUtil.difficultyFromInt(curDifficulty).toUpperCase();
 		
 		#if PRELOAD_ALL

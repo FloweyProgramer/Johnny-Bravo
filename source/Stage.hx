@@ -428,6 +428,48 @@ class Stage
 						swagBacks['stageCurtains'] = stageCurtains;
                         toAdd.push(stageCurtains);
 					}
+				
+				case 'concert':
+					{
+						curStage = 'concert';
+						camZoom = 0.5;
+
+						var bg:FlxSprite = new FlxSprite(-1040, -260).loadGraphic(Paths.image('stage', 'johnny'));
+						bg.setGraphicSize(Std.int(bg.width * 1));
+						bg.updateHitbox();
+						bg.antialiasing = FlxG.save.data.antialiasing;
+						bg.scrollFactor.set(1, 1);
+						bg.active = false;
+						swagBacks['bg'] = bg;
+						toAdd.push(bg);
+
+						var crowd:FlxSprite = new FlxSprite(-940, -660).loadGraphic(Paths.image('references', 'johnny'));
+						crowd.setGraphicSize(Std.int(crowd.width * 1));
+						crowd.updateHitbox();
+						crowd.antialiasing = FlxG.save.data.antialiasing;
+						crowd.scrollFactor.set(0.9, 0.9);
+						crowd.active = false;
+						swagBacks['crowd'] = crowd;
+						if (FlxG.save.data.distractions){
+							// toAdd.push(crowd);
+							layInFront[2].push(crowd);
+							
+						}
+							
+//
+						var signal:FlxSprite = new FlxSprite(-640, -360);
+						signal.frames = Paths.getSparrowAtlas('no_signal', 'johnny');
+						signal.animation.addByPrefix('idle', 'no signal idle', 24, true);
+						signal.setGraphicSize(Std.int(signal.width*(720/2164)*2.01));
+						signal.updateHitbox();
+						signal.animation.play('idle');
+						signal.antialiasing = FlxG.save.data.antialiasing;
+						signal.scrollFactor.set();
+						signal.visible = false;
+						swagBacks['signal'] = signal;
+						layInFront[2].push(signal);
+
+					}
 				case 'plane':
 					{
 						curStage = 'plane';
