@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="no signal.png"><SubTexture name="no signal idle0000" x="0" y="0" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0001" x="3844" y="0" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0002" x="7688" y="0" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0003" x="11532" y="0" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0004" x="0" y="2164" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0005" x="3844" y="2164" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0006" x="7688" y="2164" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+<SubTexture name="no signal idle0007" x="11532" y="2164" width="3844" height="2164" frameX="0" frameY="0" frameWidth="3844" frameHeight="2164" />
+</TextureAtlas>
