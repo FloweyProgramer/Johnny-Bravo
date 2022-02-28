@@ -110,7 +110,7 @@ class AnimationDebug extends FlxState
 			result += text + "\n";
 		}
 
-		trace("Outputting animation offsets to clipboard...");
+		
 
 		openfl.system.System.setClipboard(result);
 	}

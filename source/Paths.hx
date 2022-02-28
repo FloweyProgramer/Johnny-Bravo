@@ -93,7 +93,7 @@ class Paths
 	
 	inline static public function video(key:String, ?library:String)
 	{
-		trace('assets/videos/$key.mp4');
+		
 		return getPath('videos/$key.mp4', BINARY, library);
 	}
 
@@ -155,7 +155,7 @@ class Paths
 	inline static public function imageCached(key:String):FlxGraphic
 	{
 		var data = Caching.bitmapData.get(key);
-		trace('finding ${key} - ${data.bitmap}');
+		
 		return data;
 	}
 	#end

@@ -39,7 +39,7 @@ class SMFile
             {
                 headerData += data[inc];
                 inc++;
-                // trace(data[inc]);
+                // 
             }
 
             header = new SMHeader(headerData.split(';'));
@@ -69,7 +69,7 @@ class SMFile
             if (StringTools.contains(data[inc],"dance-double:"))
                 isDouble = true;
             if (isDouble)
-                trace('this is dance double');
+                
 
             inc += 5; // skip 5 down to where da notes @
 
@@ -79,7 +79,7 @@ class SMFile
 
             var measure = "";
 
-            trace(data[inc - 1]);
+            
 
             for (ii in inc...data.length)
             {
@@ -87,13 +87,13 @@ class SMFile
                 if (StringTools.contains(i,",") || StringTools.contains(i,";"))
                 {
                     measures.push(new SMMeasure(measure.split('\n')));
-                    //trace(measures.length);
+                    
                     measure = "";
                     continue;
                 }
                 measure += i + "\n";
             }
-            trace(measures.length + " Measures");
+            
         }
         catch(e:Exception)
         {
@@ -153,7 +153,7 @@ class SMFile
 
         // aight time to convert da measures
 
-        trace("Converting measures");
+        
 
         for(measure in measures)
         {

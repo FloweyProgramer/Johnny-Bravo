@@ -672,6 +672,49 @@ class Optimization extends Option
 		}
 }
 
+class TracesOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.traces = !FlxG.save.data.traces;
+		Main.tracelag = FlxG.save.data.traces;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Traces " + (FlxG.save.data.traces ? "ON" : "OFF");
+	}
+}
+
+class DebugRejection extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		// FlxG.save.data.rejectionBeat = !FlxG.save.data.rejectionBeat;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Debug Rejection " + (FlxG.save.data.rejectionBeat ? "ON" : "OFF");
+	}
+}
+
 class NPSDisplayOption extends Option
 {
 	public function new(desc:String)
@@ -703,7 +746,7 @@ class ReplayOption extends Option
 	
 	public override function press():Bool
 	{
-		trace("switch");
+		
 		FlxG.switchState(new LoadReplayState());
 		return false;
 	}
@@ -745,7 +788,7 @@ class CustomizeGameplay extends Option
 
 	public override function press():Bool
 	{
-		trace("switch");
+		
 		FlxG.switchState(new GameplayCustomizeState());
 		return false;
 	}
@@ -788,7 +831,7 @@ class OffsetMenu extends Option
 
 	public override function press():Bool
 	{
-		trace("switch");
+		
 		var poop:String = Highscore.formatSong("Tutorial", 1);
 
 		PlayState.SONG = Song.loadFromJson(poop, "Tutorial");
@@ -796,7 +839,7 @@ class OffsetMenu extends Option
 		PlayState.storyDifficulty = 0;
 		PlayState.storyWeek = 0;
 		PlayState.offsetTesting = true;
-		trace('CUR WEEK' + PlayState.storyWeek);
+		
 		LoadingState.loadAndSwitchState(new PlayState());
 		return false;
 	}
@@ -817,7 +860,7 @@ class BotPlay extends Option
 	public override function press():Bool
 	{
 		FlxG.save.data.botplay = !FlxG.save.data.botplay;
-		trace('BotPlay : ' + FlxG.save.data.botplay);
+		
 		display = updateDisplay();
 		return true;
 	}
@@ -866,7 +909,7 @@ class LockWeeksOption extends Option
 		FlxG.save.data.weekUnlocked = 1;
 		StoryMenuState.weekUnlocked = [true, true];
 		confirm = false;
-		trace('Weeks Locked');
+		
 		display = updateDisplay();
 		return true;
 	}
@@ -905,7 +948,7 @@ class ResetScoreOption extends Option
 			Highscore.songCombos[key] = '';
 		}
 		confirm = false;
-		trace('Highscores Wiped');
+		
 		display = updateDisplay();
 		return true;
 	}
@@ -967,10 +1010,11 @@ class ResetSettings extends Option
 		FlxG.save.data.optimize = null;
 		FlxG.save.data.cacheImages = null;
 		FlxG.save.data.editor = null;
+        FlxG.save.data.rejectionBeat = false;
 
 		KadeEngineData.initSave();
 		confirm = false;
-		trace('All settings have been reset');
+		
 		display = updateDisplay();
 		return true;
 	}

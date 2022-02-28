@@ -20,11 +20,11 @@ class Waveform extends FlxSprite
 
         var path = StringTools.replace(audioPath, "songs:","");
 
-        trace("loading " + path);
+        
 
         buffer = AudioBuffer.fromFile(path);
 
-        trace("BPS: " + buffer.bitsPerSample + " - Channels: " + buffer.channels);
+        
 
         makeGraphic(height,350,FlxColor.TRANSPARENT);
 
@@ -64,7 +64,7 @@ class Waveform extends FlxSprite
 
                 if ((index % samplesPerCollumn) == 0)
 				{
-					// trace("min: " + min + ", max: " + max);
+					// 
 
 					if (drawIndex > 350)
 					{

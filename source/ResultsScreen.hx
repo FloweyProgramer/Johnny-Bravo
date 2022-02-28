@@ -55,6 +55,7 @@ class ResultsScreen extends FlxSubState
 
 	override function create()
 	{	
+        FlxG.save.data.rejectionBeat = false;
         background = new FlxSprite(0,0).makeGraphic(FlxG.width,FlxG.height,FlxColor.BLACK);
         background.scrollFactor.set();
         add(background);
@@ -184,16 +185,17 @@ class ResultsScreen extends FlxSubState
 
 
     var frames = 0;
-
+    var playbackshit:Bool;
 	override function update(elapsed:Float)
 	{
         if (music != null && music.volume < 0.5)
 		    music.volume += 0.01 * elapsed;
 
         // keybinds
-
-        if (PlayerSettings.player1.controls.ACCEPT)
+        
+        if (PlayerSettings.player1.controls.ACCEPT && playbackshit!=true)
         {
+            
             music.fadeOut(0.3);
             
             PlayState.loadRep = false;
@@ -212,9 +214,20 @@ class ResultsScreen extends FlxSubState
 
             if (PlayState.isStoryMode)
             {
-                FlxG.sound.playMusic(Paths.music('freakyMenu'));
-                Conductor.changeBPM(102);
-                FlxG.switchState(new MainMenuState());
+               
+                playbackshit = true;
+                // if (PlayState.SONG.song == 'Rejection')
+                //     FlxG.switchState(new MP4VideoState('how_is_it', new MainMenuState()));
+                // else
+                var video = new MP4Handler();
+                video.playMP4(Paths.video('finale'));
+                video.finishCallback = function(){
+                    FlxG.sound.playMusic(Paths.music('freakyMenu'));
+                    Conductor.changeBPM(130);
+                    playbackshit = false;
+                    FlxG.switchState(new MainMenuState());
+                }
+                
             }
             else
                 FlxG.switchState(new FreeplayState());

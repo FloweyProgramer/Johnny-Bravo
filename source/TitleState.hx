@@ -1,5 +1,6 @@
 package;
 
+import hscript.Checker.CAbstract;
 #if sys
 import smTools.SMFile;
 #end
@@ -48,6 +49,10 @@ class TitleState extends MusicBeatState
 	var ngSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
+	var curWacky2:Array<String> = [];
+	var curWacky3:Array<String> = [];
+	var curWacky4:Array<String> = [];
+	var curWacky5:Array<String> = [];
 
 	var wackyImage:FlxSprite;
 
@@ -55,9 +60,9 @@ class TitleState extends MusicBeatState
 	{
 		
 
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
+		// #if polymod
+		// polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
+		// #end
 		
 		#if sys
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
@@ -66,7 +71,7 @@ class TitleState extends MusicBeatState
 
 		@:privateAccess
 		{
-			trace("Loaded " + openfl.Assets.getLibrary("default").assetsLoaded + " assets (DEFAULT)");
+			
 		}
 		
 		#if !cpp
@@ -85,8 +90,12 @@ class TitleState extends MusicBeatState
 
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
+		curWacky2 = FlxG.random.getObject(getIntroTextShit());
+		curWacky3 = FlxG.random.getObject(getIntroTextShit());
+		curWacky4 = FlxG.random.getObject(getIntroTextShit());
+		curWacky5 = FlxG.random.getObject(getIntroTextShit());
 
-		trace('hello');
+		
 
 		// DEBUG BULLSHIT
 
@@ -96,7 +105,7 @@ class TitleState extends MusicBeatState
 
 		#if ng
 		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
-		trace('NEWGROUNDS LOL');
+		
 		#end
 
 		#if FREEPLAY
@@ -304,7 +313,7 @@ class TitleState extends MusicBeatState
 					returnedData[1] = data.substring(data.indexOf('-'), data.length);
 				  	if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState)
 					{
-						trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
+						
 						OutdatedSubState.needVer = returnedData[0];
 						OutdatedSubState.currChanges = returnedData[1];
 						FlxG.switchState(new OutdatedSubState());
@@ -318,7 +327,7 @@ class TitleState extends MusicBeatState
 				}
 				
 				http.onError = function (error) {
-				  trace('error: $error');
+				  
 				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
 				  clean();
 				}
@@ -336,7 +345,7 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>)
+	function createCoolText(textArray:Array<String>, ?beatorder:Bool=false)
 	{
 		for (i in 0...textArray.length)
 		{
@@ -345,6 +354,11 @@ class TitleState extends MusicBeatState
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
 			textGroup.add(money);
+			if (beatorder)
+				var timer = new FlxTimer().start(Conductor.crochet, function(tmr:FlxTimer)
+				{
+					
+				});
 		}
 	}
 
@@ -383,61 +397,120 @@ class TitleState extends MusicBeatState
 			case 0:
 				deleteCoolText();
 			case 1:
-				createCoolText(['Karma', 'Flowerbear', 'ItsYeshalot', 'ASpacedOutFlower']);
+				createCoolText(['ItsYeshalot', 'ASpacedOutFlower', 'Flowerbear', 'Karma', 'Pot', 'ToK']);
 			// credTextShit.visible = true;
 			case 3:
-				addMoreText('present');
+				deleteCoolText();
+				createCoolText(['JackyBob', 'Curiosity Man', 'Dreigh', 'Thevious', 'Sirj455', 'LadyJadeShade']);
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
 			case 4:
-				deleteCoolText();
+				addMoreText('With special thanks to');
 			// credTextShit.visible = false;
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
-			case 5:
+			case 6:
+				deleteCoolText();
+				addMoreText('Ticket winners');
 				
-				
-				createCoolText(['Newgrounds logo', 'because']);
+				// createCoolText(['Newgrounds logo', 'because']);
 			case 7:
-				
-				
-				addMoreText('im lazy');
-				ngSpr.visible = true;
+				deleteCoolText();
+				createCoolText(['Ticket winners', 'phlox', 'sugarratio', 'artcarrot', 'samthesly']);
+				// addMoreText('im lazy');
+				// ngSpr.visible = true;
 				
 			// crdTextShit.text += '\nNewgrounds';
-			case 8:
+			case 9:
 				deleteCoolText();
-				ngSpr.visible = false;
+				createCoolText(['Ticket winners', 'Rebecca', 'Celeste', 'kolsan', 'Clowfoe']);
+				// ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 9:
-				createCoolText([curWacky[0]]);
-			// credTextShit.visible = true;
+			// case 9:
+			// 	createCoolText([curWacky[0]]);
 			case 11:
-				addMoreText(curWacky[1]);
-			// credTextShit.text += '\nlmao';
-			case 12:
 				deleteCoolText();
+				createCoolText(['Ticket Winners', 'Cyrix']);
+			// credTextShit.visible = true;
+			// case 11:
+			// 	addMoreText(curWacky[1]);
+			// credTextShit.text += '\nlmao';
+			case 13:
+				deleteCoolText();
+				createCoolText(['Tricky Mod Developers', 'Banbuds', 'Rozebud', 'Cval', 'YingYang48']);
+			case 15:
+				deleteCoolText();
+				createCoolText(['Tricky Mod Developers', 'JADS', 'Moro', 'Thanks for letting us', 'use the clown']);
+			case 17:
+				deleteCoolText();
+				createCoolText(['Minus mod', 'IagoAnims', 'AshGray', 'pyroblujay', 'ness', 'DevilHare']);
+			case 19:
+				deleteCoolText();
+				createCoolText(['Minus mod', 'Smokey', 'bbpanzu', 'rozebud', 'cval', 'hayasgpt', 'ArtemiyKopych']);
+			case 21:
+				deleteCoolText();
+				addMoreText(curWacky[0]);
+			case 23:
+				addMoreText(curWacky[1]);
+			case 25:
+				deleteCoolText();
+				addMoreText(curWacky2[0]);
+			case 27:
+				addMoreText(curWacky2[1]);
+			case 29:
+				deleteCoolText();
+				addMoreText(curWacky3[0]);
+			case 31:
+				addMoreText(curWacky3[1]);
+			case 33:
+				deleteCoolText();
+				addMoreText(curWacky4[0]);
+			case 35:
+				addMoreText(curWacky4[1]);
+			case 37:
+				deleteCoolText();
+				addMoreText(curWacky5[0]);
+			case 39:
+				addMoreText(curWacky5[1]);
+			case 41:
+				deleteCoolText();
+				addMoreText('totally secret screen');
+			case 43:
+				addMoreText('very cool');
+			case 45:
+				deleteCoolText();
+				addMoreText('the devs are');
+				addMoreText('happy to present');
+			case 47:
+				addMoreText('The mod months');
+				addMoreText('in the making');
+			case 49:
+				deleteCoolText();
+				addMoreText('The Friday night funkin mod');
+			case 51:
+				deleteCoolText();
+				addMoreText('Vs');
+			case 53:
+				addMoreText('Johnny');
+			case 54:
+				addMoreText('Bravo');
+			
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 13:
-				addMoreText('FNF');
-			// credTextShit.visible = true;
-			case 14:
-				addMoreText('Johnny');
-			// credTextShit.text += '\nNight';
-			case 15:
-				addMoreText('Bravo'); // credTextShit.text += '\nFunkin';
+			// case 13:
+			// 	addMoreText('FNF');
+			// // credTextShit.visible = true;
+			// case 14:
+			// 	addMoreText('Johnny');
+			// // credTextShit.text += '\nNight';
+			// case 15:
+			// 	addMoreText('Bravo'); // credTextShit.text += '\nFunkin';
 
-			case 55:
-				deleteCoolText();
-				addMoreText('Hold on');
-
-			case 58:
-				addMoreText('beatdrop incoming');
+		
 
 			case 60:
 				deleteCoolText();

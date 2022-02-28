@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="campaign_menu_UI_assets.png">
+<TextureAtlas imagePath="campaign_menu_UI_characters.png">
 	<!-- Created with Adobe Animate version 21.0.3.38773 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="BF HEY!!0000" x="0" y="0" width="395" height="416" pivotX="-298.8" pivotY="206.95" frameX="0" frameY="0" frameWidth="415" frameHeight="418"/>
@@ -72,19 +72,14 @@
 	<SubTexture name="GF Dancing Beat WHITE0027" x="1398" y="2554" width="699" height="642" frameX="-2" frameY="-6" frameWidth="703" frameHeight="648"/>
 	<SubTexture name="GF Dancing Beat WHITE0028" x="2097" y="2554" width="699" height="642" frameX="-2" frameY="-6" frameWidth="703" frameHeight="648"/>
 	<SubTexture name="GF Dancing Beat WHITE0029" x="2097" y="2554" width="699" height="642" frameX="-2" frameY="-6" frameWidth="703" frameHeight="648"/>
-	<SubTexture name="Johnny Bravo0000" x="2796" y="2554" width="500" height="751" pivotX="210" pivotY="376"/>
-	<SubTexture name="Johnny Bravo0001" x="3296" y="2554" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0002" x="0" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0003" x="500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0004" x="1000" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0005" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0006" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0007" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0008" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0009" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0010" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0011" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0012" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0013" x="1500" y="3305" width="500" height="751"/>
-	<SubTexture name="Johnny Bravo0014" x="1500" y="3305" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0000" x="2796" y="2559" width="500" height="751" pivotX="0" pivotY="0"/>
+	<SubTexture name="Johnny Bravo0001" x="3296" y="2559" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0002" x="0" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0003" x="500" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0004" x="1000" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0005" x="1500" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0006" x="1500" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0007" x="1500" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0008" x="1500" y="3310" width="500" height="751"/>
+	<SubTexture name="Johnny Bravo0009" x="1500" y="3310" width="500" height="751"/>
 </TextureAtlas>

@@ -286,8 +286,17 @@ class VlcBitmap extends Bitmap
 
 	function onResize(e:Event):Void
 	{
-		set_height(FlxG.stage.stageHeight);
-		set_width(FlxG.stage.stageHeight * (16 / 9));
+		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16)
+		{
+			set_width(FlxG.stage.stageHeight * (16 / 9));
+			set_height(FlxG.stage.stageHeight);
+		}
+		else
+		{
+			set_width(FlxG.stage.stageWidth);
+			set_height(FlxG.stage.stageWidth / (16 / 9));
+		}
+		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -383,7 +392,7 @@ class VlcBitmap extends Bitmap
 				}
 				catch (e:Error)
 				{
-					trace("error: " + e);
+					
 					throw new Error("render broke xd");
 				}
 			}
@@ -423,7 +432,7 @@ class VlcBitmap extends Bitmap
 
 	function statusOnBuffering()
 	{
-		trace("buffering");
+		
 
 		if (onBuffer != null)
 			onBuffer();
@@ -462,7 +471,7 @@ class VlcBitmap extends Bitmap
 		if (isPlaying)
 			isPlaying = false;
 
-		// trace("end reached!");
+		// 
 		if (onComplete != null)
 			onComplete();
 	}
@@ -499,7 +508,7 @@ class VlcBitmap extends Bitmap
 
 	function statusOnError()
 	{
-		trace("VLC ERROR - File not found?");
+		
 
 		if (onError != null)
 			onError();

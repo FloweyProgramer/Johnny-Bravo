@@ -25,6 +25,9 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCategory> = [
+		new OptionCategory('Johnny Bravo', [
+			new TracesOption('Why the fuck would you enable this')
+		]),
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
 			new DownscrollOption("Toggle making the notes scroll down rather than up."),
@@ -89,6 +92,9 @@ class OptionsMenu extends MusicBeatState
 	{
 		clean();
 		instance = this;
+		#if debug
+		options[0].addOption(new DebugRejection("Debug option for Testing the night state"));
+		#end
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 
 		menuBG.color = 0xFFea71fd;
@@ -250,7 +256,7 @@ class OptionsMenu extends MusicBeatState
 				{
 					if (currentSelectedCat.getOptions()[curSelected].press()) {
 						grpControls.members[curSelected].reType(currentSelectedCat.getOptions()[curSelected].getDisplay());
-						trace(currentSelectedCat.getOptions()[curSelected].getDisplay());
+						
 					}
 				}
 				else

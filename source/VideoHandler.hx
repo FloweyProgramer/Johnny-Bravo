@@ -88,7 +88,7 @@ class VideoHandler
 		netStream.play(vidPath);
 		ignoreShit = false;
 		#end
-		trace(vidPath);
+		
 	}
 	
 	public function stop():Void

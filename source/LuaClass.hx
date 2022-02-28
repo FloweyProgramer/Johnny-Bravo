@@ -726,7 +726,7 @@ class LuaNote extends LuaClass { // again, stolen from andromeda but improved a 
     override function Register(l:State){
       state=l;
       super.Register(l);
-      trace("Registered " + className);
+      
     }
   }
 
@@ -981,7 +981,7 @@ class LuaNote extends LuaClass { // again, stolen from andromeda but improved a 
     override function Register(l:State){
       state=l;
       super.Register(l);
-      trace("Registered " + className);
+      
     }
 
   }
@@ -1254,7 +1254,7 @@ class LuaNote extends LuaClass { // again, stolen from andromeda but improved a 
           }
         }
   
-        trace("fuck " + char);
+        
 
         if (char == null)
         {

@@ -85,7 +85,7 @@ class Caching extends MusicBeatState
 		#if cpp
 		if (FlxG.save.data.cacheImages)
 		{
-			trace("caching images...");
+			
 
 			for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters")))
 			{
@@ -95,7 +95,7 @@ class Caching extends MusicBeatState
 			}
 		}
 
-		trace("caching music...");
+		
 
 		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/songs")))
 		{
@@ -113,7 +113,7 @@ class Caching extends MusicBeatState
 		add(kadeLogo);
 		add(text);
 
-		trace('starting caching..');
+		
 		
 		#if cpp
 		// update thread
@@ -153,13 +153,13 @@ class Caching extends MusicBeatState
 	function cache()
 	{
 		#if !linux
-		trace("LOADING: " + toBeDone + " OBJECTS.");
+		
 
 		for (i in images)
 		{
 			var replaced = i.replace(".png","");
 			var data:BitmapData = BitmapData.fromFile("assets/shared/images/characters/" + i);
-			trace('id ' + replaced + ' file - assets/shared/images/characters/' + i + ' ${data.width}');
+			
 			var graph = FlxGraphic.fromBitmapData(data);
 			graph.persist = true;
 			graph.destroyOnNoUse = false;
@@ -171,18 +171,24 @@ class Caching extends MusicBeatState
 		{
 			FlxG.sound.cache(Paths.inst(i));
 			FlxG.sound.cache(Paths.voices(i));
-			trace("cached " + i);
+			
 			done++;
 		}
 
 
-		trace("Finished caching...");
+		
 
 		loaded = true;
 
-		trace(Assets.cache.hasBitmapData('GF_assets'));
+		
 
-		FlxG.switchState(new MP4VideoState());
+		var video:MP4Handler = new MP4Handler();
+		video.playMP4(Paths.video('final'));
+		video.finishCallback = function()
+		{
+			FlxG.switchState(new TitleState());
+		}
+		
 	}
 
 }

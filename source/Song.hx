@@ -87,7 +87,7 @@ class Song
 			case 'philly-nice': folderLowercase = 'philly';
 		}
 		
-		trace('loading ' + folderLowercase + '/' + jsonInput.toLowerCase());
+		
 
 		var rawJson = Assets.getText(Paths.json(folderLowercase + '/' + jsonInput.toLowerCase())).trim();
 
@@ -99,13 +99,13 @@ class Song
 
 		// FIX THE CASTING ON WINDOWS/NATIVE
 		// Windows???
-		// trace(songData);
+		// 
 
-		// trace('LOADED FROM JSON: ' + songData.notes);
+		// 
 		/* 
 			for (i in 0...songData.notes.length)
 			{
-				trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
+				
 				// songData.notes[i].sectionNotes = songData.notes[i].sectionNotes
 			}
 
@@ -121,7 +121,7 @@ class Song
 		var ba = song.bpm;
 
 		var index = 0;
-		trace("conversion stuff " + song.song + " " + song.notes.length);
+		
 		var convertedStuff:Array<Song.Event> = [];
 
 
@@ -188,7 +188,7 @@ class Song
 
 			if (i.changeBPM && i.bpm != ba)
 			{
-				trace("converting changebpm for section " + index);
+				
 				ba = i.bpm;
 				song.eventObjects.push(new Song.Event("FNF BPM Change " + index,beat,i.bpm,"BPM Change"));
 			}

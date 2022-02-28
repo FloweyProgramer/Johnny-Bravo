@@ -162,7 +162,7 @@ class DiffOverview extends FlxSubState
 		FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.expoInOut});
         FlxTween.tween(offset, {alpha: 1}, 0.5, {ease: FlxEase.expoInOut});
 
-        trace('pog');
+        
 
 		super.create();
 	}
@@ -208,7 +208,7 @@ class DiffOverview extends FlxSubState
         {
             if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
             {
-                trace("resync");
+                
                 resyncVocals();
             }
             oldStep = currentStep;
@@ -399,7 +399,7 @@ class DiffOverview extends FlxSubState
 		else
 			vocals = new FlxSound();
 
-		trace('loaded vocals');
+		
 
 		FlxG.sound.list.add(vocals);
 
@@ -483,7 +483,7 @@ class DiffOverview extends FlxSubState
 			daBeats += 1;
 		}
 
-		// trace(unspawnNotes.length);
+		// 
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);

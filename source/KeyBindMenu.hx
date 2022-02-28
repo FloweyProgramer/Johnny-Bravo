@@ -208,7 +208,7 @@ class KeyBindMenu extends FlxSubState
 
                     if (gamepad.justPressed.ANY)
                     {
-                        trace(gamepad.firstJustPressedID());
+                        
                         addKeyGamepad(gamepad.firstJustPressedID());
                         save();
                         state = "select";
@@ -260,7 +260,7 @@ class KeyBindMenu extends FlxSubState
             for(i in 0...4){
 
                 var textStart = (i == curSelected) ? "> " : "  ";
-                trace(gpKeys[i]);
+                
                 keyTextDisplay.text += textStart + keyText[i] + ": " + gpKeys[i] + "\n";
                 
             }
@@ -374,7 +374,7 @@ class KeyBindMenu extends FlxSubState
 
         for(x in blacklist){notAllowed.push(x);}
 
-        trace(notAllowed);
+        
 
         for(x in 0...keys.length)
             {

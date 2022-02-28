@@ -41,6 +41,7 @@ class FreeplayState extends MusicBeatState
 	var scoreText:FlxText;
 	var comboText:FlxText;
 	var diffText:FlxText;
+	var playbackshit:Bool = false;
 	var diffCalcText:FlxText;
 	var previewtext:FlxText;
 	var lerpScore:Int = 0;
@@ -60,7 +61,7 @@ class FreeplayState extends MusicBeatState
 	{
 		try 
 		{
-			array.push(Song.loadFromJson(Highscore.formatSong(format, diff), name));
+			array.push(Song.loadFromJson(Highscore.formatSong(format, 1), name));
 		}
 		catch(ex)
 		{
@@ -93,10 +94,10 @@ class FreeplayState extends MusicBeatState
 
 
 			#if sys
-			if (FileSystem.exists('assets/data/${format}/${format}-hard.json'))
-				diffsThatExist.push("Hard");
-			if (FileSystem.exists('assets/data/${format}/${format}-easy.json'))
-				diffsThatExist.push("Easy");
+			// if (FileSystem.exists('assets/data/${format}/${format}-hard.json'))
+			// 	diffsThatExist.push("Hard");
+			// if (FileSystem.exists('assets/data/${format}/${format}-easy.json'))
+				// diffsThatExist.push("Easy");
 			if (FileSystem.exists('assets/data/${format}/${format}.json'))
 				diffsThatExist.push("Normal");
 
@@ -117,33 +118,33 @@ class FreeplayState extends MusicBeatState
 
 			meta.diffs = diffsThatExist;
 
-			if (diffsThatExist.length != 3)
-				trace("I ONLY FOUND " + diffsThatExist);
+			// if (diffsThatExist.length != 3)
+				
 
 			FreeplayState.songData.set(meta.songName,diffs);
-			trace('loaded diffs for ' + meta.songName);
+			
 			songs.push(meta);
 
 		}
 
-		trace("tryin to load sm files");
+		
 
 		#if sys
 		for(i in FileSystem.readDirectory("assets/sm/"))
 		{
-			trace(i);
+			
 			if (FileSystem.isDirectory("assets/sm/" + i))
 			{
-				trace("Reading SM file dir " + i);
+				
 				for (file in FileSystem.readDirectory("assets/sm/" + i))
 				{
 					if (file.contains(" "))
 						FileSystem.rename("assets/sm/" + i + "/" + file,"assets/sm/" + i + "/" + file.replace(" ","_"));
 					if (file.endsWith(".sm") && !FileSystem.exists("assets/sm/" + i + "/converted.json"))
 					{
-						trace("reading " + file);
+						
 						var file:SMFile = SMFile.loadFile("assets/sm/" + i + "/" + file.replace(" ","_"));
-						trace("Converting " + file.header.TITLE);
+						
 						var data = file.convertToFNF("assets/sm/" + i + "/converted.json");
 						var meta = new SongMetadata(file.header.TITLE, 0, "sm",file,"assets/sm/" + i);
 						songs.push(meta);
@@ -152,14 +153,14 @@ class FreeplayState extends MusicBeatState
 					}
 					else if (FileSystem.exists("assets/sm/" + i + "/converted.json") && file.endsWith(".sm"))
 					{
-						trace("reading " + file);
+						
 						var file:SMFile = SMFile.loadFile("assets/sm/" + i + "/" + file.replace(" ","_"));
-						trace("Converting " + file.header.TITLE);
+						
 						var data = file.convertToFNF("assets/sm/" + i + "/converted.json");
 						var meta = new SongMetadata(file.header.TITLE, 0, "sm",file,"assets/sm/" + i);
 						songs.push(meta);
 						var song = Song.loadFromJsonRAW(File.getContent("assets/sm/" + i + "/converted.json"));
-						trace("got content lol");
+						
 						songData.set(file.header.TITLE, [song,song,song]);
 					}
 				}
@@ -167,7 +168,7 @@ class FreeplayState extends MusicBeatState
 		}
 		#end
 
-		//trace("\n" + diffList);
+		
 
 		/* 
 			if (FlxG.sound.music != null)
@@ -275,7 +276,7 @@ class FreeplayState extends MusicBeatState
 
 			// scoreText.textField.htmlText = md;
 
-			trace(md);
+			
 		 */
 
 		super.create();
@@ -411,10 +412,12 @@ class FreeplayState extends MusicBeatState
 		if (controls.BACK)
 		{
 			FlxG.switchState(new MainMenuState());
+            
 		}
 
-		if (accepted)
+		if (accepted && !playbackshit)
 		{
+			playbackshit = true;
 			// adjusting the song name to be compatible
 			var songFormat = StringTools.replace(songs[curSelected].songName, " ", "-");
 			switch (songFormat) {
@@ -424,7 +427,7 @@ class FreeplayState extends MusicBeatState
 			var hmm;
 			try
 			{
-				hmm = songData.get(songs[curSelected].songName)[curDifficulty];
+				hmm = songData.get(songs[curSelected].songName)[0];
 				if (hmm == null)
 					return;
 			}
@@ -439,7 +442,7 @@ class FreeplayState extends MusicBeatState
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
+			
 			#if sys
 			if (songs[curSelected].songCharacter == "sm")
 				{
@@ -455,7 +458,15 @@ class FreeplayState extends MusicBeatState
 
 			PlayState.songMultiplier = rate;
 
-			LoadingState.loadAndSwitchState(new PlayState());
+			if (PlayState.SONG.song == "Madness"){
+				var video:MP4Handler = new MP4Handler();
+				video.playMP4(Paths.video('tiky pog'));
+				video.finishCallback = function() {
+					LoadingState.loadAndSwitchState(new PlayState());
+				};
+			}
+			else
+				LoadingState.loadAndSwitchState(new PlayState());
 
 			clean();
 		}
@@ -466,7 +477,7 @@ class FreeplayState extends MusicBeatState
 		if (!songs[curSelected].diffs.contains(CoolUtil.difficultyFromInt(curDifficulty + change)))
 			return;
 
-		curDifficulty += change;
+		curDifficulty = 1;
 
 		if (curDifficulty < 0)
 			curDifficulty = 2;
@@ -543,7 +554,7 @@ class FreeplayState extends MusicBeatState
 		if (songs[curSelected].songCharacter == "sm")
 		{
 			var data = songs[curSelected];
-			trace("Loading " + data.path + "/" + data.sm.header.MUSIC);
+			
 			var bytes = File.getBytes(data.path + "/" + data.sm.header.MUSIC);
 			var sound = new Sound();
 			sound.loadCompressedDataFromByteArray(bytes.getData(), bytes.length);

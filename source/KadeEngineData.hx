@@ -121,6 +121,12 @@ class KadeEngineData
 		if (FlxG.save.data.zoom == null)
 			FlxG.save.data.zoom = 1;
 
+		if (FlxG.save.data.traces == null)
+			FlxG.save.data.traces = false;
+
+		if (FlxG.save.data.rejectionBeat == null)
+			FlxG.save.data.rejectionBeat = false; // this is an old flag that controlled the rejection mini-scene in the story mode menu
+
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		
 		KeyBinds.gamepad = gamepad != null;

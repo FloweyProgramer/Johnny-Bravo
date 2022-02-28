@@ -84,7 +84,7 @@
 	<assets path="assets/sm"    library="sm"    exclude="*.mp3" unless="web"/>
 
 	<assets path='example_mods' rename='mods' embed='false'/>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+	<assets path='art/kekw.txt' rename='Credits.txt'/>
 	<assets path='LICENSE' rename='LICENSE.txt' />
 	<!-- <template path='mods' /> -->
 	
@@ -161,6 +161,8 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+
+	<haxedef name="FEATURE_OBS" if="windows" />
 	
 	<icon path="art/icon8.png" size='8'/>
 	<icon path="art/icon16.png" size='16'/>
@@ -169,7 +171,7 @@
 	<icon path="art/icon128.png" size='128'/>
 	<icon path="art/icon256.png" size='256'/>
 	<icon path="art/icon512.png" size='512'/>
-	<icon path="art/iconOG.png" />
+	<icon path="art/iconpog.png" />
 
 	<haxeflag name="--no-traces" unless="debug" />
 	<haxeflag name="--dce full" if="release" />

@@ -136,7 +136,7 @@ class WebmHandler
 	
 	public function onEnd():Void
 	{
-		trace("IT ENDED!");
+		
 		ended = true;
 	}
 	
@@ -163,7 +163,7 @@ class WebmHandler
 	public var webm:Sprite;
 	public function new()
 	{
-	trace("THIS IS ANDROID! or some shit...");
+	
 	}
 	#end
 }

@@ -52,7 +52,7 @@ class ModchartState
 		{
 			if (e != "attempt to call a nil value")
 			{
-				trace(StringTools.replace(e,"c++","haxe function"));
+				
 			}
 		}
 		if( result == null) {
@@ -80,7 +80,7 @@ class ModchartState
 			case Type.ValueType.TObject:
 				objectToLua(l, val);
 			default:
-				trace("haxe value not supported - " + val + " which is a type of " + Type.typeof(val));
+				
 				return false;
 		}
 
@@ -93,7 +93,7 @@ class ModchartState
 		var FUCK = 0;
 		for(n in Reflect.fields(res))
 		{
-			trace(Type.typeof(n).getName());
+			
 			FUCK++;
 		}
 
@@ -183,7 +183,7 @@ class ModchartState
 	}
 
 	public function setVar(var_name : String, object : Dynamic){
-		// trace('setting variable ' + var_name + ' to ' + object);
+		// 
 
 		Lua.pushnumber(lua,object);
 		Lua.setglobal(lua, var_name);
@@ -192,7 +192,7 @@ class ModchartState
 	public function getVar(var_name : String, type : String) : Dynamic {
 		var result : Any = null;
 
-		// trace('getting variable ' + var_name + ' with a type of ' + type);
+		// 
 
 		Lua.getglobal(lua, var_name);
 		result = Convert.fromLua(lua,-1);
@@ -202,7 +202,7 @@ class ModchartState
 		return null;
 		} else {
 		var result = convert(result, type);
-		//trace(var_name + ' result: ' + result);
+		
 		return result;
 		}
 	}
@@ -273,7 +273,7 @@ class ModchartState
 
 		sprite.frames = FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(data), Sys.getCwd() + "assets/data/" + songLowercase + "/" + spritePath + ".xml");
 
-		trace(sprite.frames.frames.length);
+		
 
 		for (p in 0...names.length)
 		{
@@ -365,11 +365,11 @@ class ModchartState
 
     function new(? isStoryMode = true)
     {
-		trace('opening a lua state (because we are cool :))');
+		
 		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
-		trace("Lua version: " + Lua.version());
-		trace("LuaJIT version: " + Lua.versionJIT());
+		
+		
 		Lua.init_callbacks(lua);
 
 		// shaders = new Array<LuaShader>();

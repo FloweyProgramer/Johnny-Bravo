@@ -50,23 +50,23 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
-			case 'gf-radio':
+			case 'gf-radio' | 'gf-minus':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('GF_radio', 'shared', true);
+				tex = Paths.getSparrowAtlas(curCharacter, 'shared', true);
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+				// animation.addByPrefix('cheer', 'GF Cheer', 24, false);
+				// animation.addByPrefix('singLEFT', 'GF left note', 24, false);
+				// animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
+				// animation.addByPrefix('singUP', 'GF Up Note', 24, false);
+				// animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
+				// animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+				// animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
+				// animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				loadOffsetFile(curCharacter);
+				loadOffsetFile('gf-radio');
 
 				playAnim('danceRight');
 
@@ -226,11 +226,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
-			case 'bf':
-				var tex = Paths.getSparrowAtlas('BOYFRIEND', 'shared', true);
+			case 'bf' | 'bf-minus':
+				var tex = Paths.getSparrowAtlas((curCharacter == 'bf' ?'BOYFRIEND' : 'bf-minus'), 'shared', true);
 				frames = tex;
 
-				trace(tex.frames.length);
+				
 
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -249,7 +249,7 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
-				loadOffsetFile(curCharacter);
+				loadOffsetFile('bf');
 
 				playAnim('idle');
 
@@ -399,13 +399,14 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
-			case 'johnny':
-				frames = Paths.getSparrowAtlas('johnny', 'shared', true);
-				animation.addByPrefix('idle', 'casualjohnny idle', 12, false);
-				animation.addByPrefix('singUP', 'casualjohnny up', 24, false);
-				animation.addByPrefix('singRIGHT', 'casualjohnny right', 24, false);
-				animation.addByPrefix('singLEFT', 'casualjohnny left', 24, false);
-				animation.addByPrefix('singDOWN', 'casualjohnny down', 24, false);
+			case 'johnny' | 'johnny-minus':
+				frames = Paths.getSparrowAtlas(curCharacter, 'shared', true);
+                var buzzword:String = (curCharacter == 'johnny-minus') ? 'jbminus' : 'casualjohnny';
+				animation.addByPrefix('idle', '${buzzword} idle', 12, false);
+				animation.addByPrefix('singUP', '${buzzword} up', 24, false);
+				animation.addByPrefix('singRIGHT', '${buzzword} right', 24, false);
+				animation.addByPrefix('singLEFT', '${buzzword} left', 24, false);
+				animation.addByPrefix('singDOWN', '${buzzword} down', 24, false);
 
 				loadOffsetFile(curCharacter);
 
@@ -427,7 +428,7 @@ class Character extends FlxSprite
 				var tex = Paths.getSparrowAtlas('GF_playable', 'shared', true);
 				frames = tex;
 
-				trace(tex.frames.length);
+				
 
 				animation.addByPrefix('idle', 'GF idle', 24, false);
 				animation.addByPrefix('singUP', 'GF up', 24, false);
@@ -518,7 +519,7 @@ class Character extends FlxSprite
 				dadVar = 6.1;
 			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 			{
-				trace('dance');
+				
 				dance();
 				holdTimer = 0;
 			}
@@ -545,7 +546,7 @@ class Character extends FlxSprite
 		{
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-radio':
+				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-radio' | 'gf-minus':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
@@ -613,8 +614,8 @@ class Character extends FlxSprite
 	{
 		if (curCharacter == 'tricky')
 			animOffsets[name] = [x / 3, y / 3];
-		else if (curCharacter == 'johnny' && PlayState.SONG.song.toLowerCase() == 'madness')
-			animOffsets[name] = [x * 0.65, y * 0.65];
+		// else if (curCharacter == 'johnny' && PlayState.SONG.song.toLowerCase() == 'madness')
+		// 	animOffsets[name] = [x * 0.65, y * 0.65];
 		else
 			animOffsets[name] = [x, y];
 	}

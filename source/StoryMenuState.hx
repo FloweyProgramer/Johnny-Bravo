@@ -10,6 +10,7 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
@@ -24,13 +25,15 @@ class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
 
+	var tweenDone = false;
+
 	static function weekData():Array<Dynamic>
 	{
 		return [
-			['rejection'],
+			(!FlxG.save.data.rejectionBeat ? ['Shoot Your Shot', 'Enough is Enough', 'Rejection'] : ["Rejection"]),
 		];
 	}
-	var curDifficulty:Int = 1;
+	public var curDifficulty:Int = (!FlxG.save.data.rejectionBeat ? 1 : PlayState.storyDifficulty);
 
 	public static var weekUnlocked:Array<Bool> = [];
 
@@ -44,7 +47,11 @@ class StoryMenuState extends MusicBeatState
 
 	var curWeek:Int = 0;
 
+	var isCutscene:Bool = false;
+
 	var txtTracklist:FlxText;
+
+	var moNotice:FlxText;
 
 	var grpWeekText:FlxTypedGroup<MenuItem>;
 	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
@@ -100,6 +107,8 @@ class StoryMenuState extends MusicBeatState
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
 		scoreText.setFormat("VCR OSD Mono", 32);
 
+		
+
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
@@ -110,8 +119,17 @@ class StoryMenuState extends MusicBeatState
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
+		moNotice = new FlxText(FlxG.width * 0.4, 600, 0, "", 32);
+		moNotice.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, RIGHT);
+
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+		var continueTxt = new FlxText(100, 100, 0, (false ? 'Hi chat' : ''), 50);
+		continueTxt.setFormat("VCR OSD Mono", 50, FlxColor.WHITE, RIGHT);
+		continueTxt.alpha = 0;
+		var continueTxt2 = new FlxText(110, 150, 0, "", 50); //auctually don't like the text lmao
+		continueTxt2.setFormat("VCR OSD Mono", 50, FlxColor.WHITE, RIGHT);
+		continueTxt2.alpha = 0;
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -122,9 +140,11 @@ class StoryMenuState extends MusicBeatState
 		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
 		add(blackBarThingie);
 
+		add(moNotice);
+
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 
-		trace("Line 70");
+		
 
 		for (i in 0...weekData().length)
 		{
@@ -140,7 +160,7 @@ class StoryMenuState extends MusicBeatState
 			// Needs an offset thingie
 			if (!weekUnlocked[i])
 			{
-				trace('locking week ' + i);
+				
 				var lock:FlxSprite = new FlxSprite(weekThing.width + 10 + weekThing.x);
 				lock.frames = ui_tex;
 				lock.animation.addByPrefix('lock', 'lock');
@@ -151,23 +171,31 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		trace("Line 96");
+		
 
 		grpWeekCharacters.add(new MenuCharacter(0, 100, 0.5, false));
 		grpWeekCharacters.add(new MenuCharacter(450, 25, 0.9, true));
 		grpWeekCharacters.add(new MenuCharacter(850, 100, 0.5, true));
 
-		difficultySelectors = new FlxGroup();
-		add(difficultySelectors);
+		if (FlxG.save.data.rejectionBeat)
+		{
+			grpWeekCharacters.forEach(function(character:MenuCharacter):Void
+			{
+				character.visible = false;
+			});
+		}
 
-		trace("Line 124");
+		difficultySelectors = new FlxGroup();
+		// add(difficultySelectors);
+
+		
 
 		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
-		difficultySelectors.add(leftArrow);
+		// difficultySelectors.add(leftArrow);
 
 		sprDifficulty = new FlxSprite(leftArrow.x + 130, leftArrow.y);
 		sprDifficulty.frames = ui_tex;
@@ -175,21 +203,26 @@ class StoryMenuState extends MusicBeatState
 		sprDifficulty.animation.addByPrefix('normal', 'NORMAL');
 		sprDifficulty.animation.addByPrefix('hard', 'HARD');
 		sprDifficulty.animation.play('easy');
-		changeDifficulty();
+		changeDifficulty(0, true);
 
-		difficultySelectors.add(sprDifficulty);
+		// difficultySelectors.add(sprDifficulty);
 
 		rightArrow = new FlxSprite(sprDifficulty.x + sprDifficulty.width + 50, leftArrow.y);
 		rightArrow.frames = ui_tex;
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
-		difficultySelectors.add(rightArrow);
+		// difficultySelectors.add(rightArrow);
 
-		trace("Line 150");
+		
 
 		add(yellowBG);
-		add(grpWeekCharacters);
+		if (!FlxG.save.data.rejectionBeat)
+		{
+			add(grpWeekCharacters);
+		}
+		add(continueTxt);
+		add(continueTxt2);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, yellowBG.x + yellowBG.height + 100, 0, "Tracks", 32);
 		txtTracklist.alignment = CENTER;
@@ -199,6 +232,18 @@ class StoryMenuState extends MusicBeatState
 		// add(rankText);
 		add(scoreText);
 		add(txtWeekTitle);
+
+		// if (FlxG.save.data.rejectionBeat){
+		// 	FlxTween.color(yellowBG, 2, 0xFFF9CF51, 0xFF4a0080, {ease: FlxEase.sineInOut, startDelay: 0.5, onComplete:function(twe:FlxTween){
+		// 		FlxTween.tween(continueTxt, {alpha: 1}, 0.5, {ease: FlxEase.sineInOut, onComplete:function(twe:FlxTween){
+		// 			tweenDone=true;
+		// 		}});
+		// 		FlxTween.tween(continueTxt2, {alpha: 1}, 0.5, {ease: FlxEase.sineInOut});
+		// 	}});
+			
+		// }
+
+        // FlxTween.tween(continueTxt, {alpha: 1}, 0.5, {ease: FlxEase.sineInOut});
 
 		updateText();
 
@@ -215,7 +260,7 @@ class StoryMenuState extends MusicBeatState
 			bullShit++;
 		}
 
-		trace("Line 165");
+		
 
 		super.create();
 	}
@@ -233,6 +278,19 @@ class StoryMenuState extends MusicBeatState
 		// FlxG.watch.addQuick('font', scoreText.font);
 
 		difficultySelectors.visible = weekUnlocked[curWeek];
+		moNotice.text = "";
+		if (true)
+			{
+				moNotice.text = "First cutscene has copyrighted theme\nPress P to change the theme\n";
+				if (Main.copyright) moNotice.text += "Non-Copyright song applied\n";
+	
+				if (FlxG.keys.justPressed.P)
+				{
+					Main.copyright = !Main.copyright;
+					if (Main.copyright) FlxG.sound.play(Paths.sound('cancelMenu'));
+					else FlxG.sound.play(Paths.sound('scrollMenu'));
+				}
+			}
 
 		grpLocks.forEach(function(lock:FlxSprite)
 		{
@@ -301,13 +359,14 @@ class StoryMenuState extends MusicBeatState
 					changeDifficulty(-1);
 			}
 
-			if (controls.ACCEPT)
+			if (FlxG.save.data.rejectionBeat ? tweenDone : controls.ACCEPT)
 			{
 				selectWeek();
+				
 			}
 		}
 
-		if (controls.BACK && !movedBack && !selectedWeek)
+		if ((controls.BACK && !movedBack && !selectedWeek) && !FlxG.save.data.rejectionBeat)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
@@ -326,6 +385,7 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
+		tweenDone = false;
 		if (weekUnlocked[curWeek])
 		{
 			if (stopspamming == false)
@@ -360,16 +420,53 @@ class StoryMenuState extends MusicBeatState
 			PlayState.SONG = Song.conversionChecks(Song.loadFromJson(poop, PlayState.storyPlaylist[0]));
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
-			new FlxTimer().start(1, function(tmr:FlxTimer)
+			
+			var video:MP4Handler = new MP4Handler();
+
+			if (curWeek == 0 && !isCutscene) // Checks if the current week is JB WEEK POG.
+				{
+					isCutscene = true;
+					new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						{
+							video.playMP4(Paths.video((!FlxG.save.data.rejectionBeat ? (Main.copyright ? 'dmcafree' : 'intro') : 'intro2')));
+							video.finishCallback = function()
+							{
+								LoadingState.loadAndSwitchState(new PlayState());
+							}
+							
+							
+						}
+					});
+				}
+			else
 			{
-				//LoadingState.loadAndSwitchState(new PlayState(), true);
-				LoadingState.loadAndSwitchState(new MP4VideoState('johnny_cutscene_2_8_', new PlayState()));
-			}); 
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					if (isCutscene)
+						{
+							try
+							{
+								video.onVLCComplete();
+							}
+							catch (e)
+							{
+								
+							}
+						}
+
+					LoadingState.loadAndSwitchState(new PlayState(), true);
+				});
+			}
+		
+	
 		}
 	}
 
-	function changeDifficulty(change:Int = 0):Void
+	function changeDifficulty(change:Int = 0, ?init=false):Void
 	{
+		if ((FlxG.save.data.rejectionBeat && !init) || true)
+			return;
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
@@ -463,7 +560,7 @@ class StoryMenuState extends MusicBeatState
 		if(week <= weekData().length - 1 && FlxG.save.data.weekUnlocked == week)
 		{
 			weekUnlocked.push(true);
-			trace('Week ' + week + ' beat (Week ' + (week + 1) + ' unlocked)');
+			
 		}
 
 		FlxG.save.data.weekUnlocked = weekUnlocked.length - 1;

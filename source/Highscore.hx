@@ -32,7 +32,7 @@ class Highscore
 			}
 			else
 				setScore(daSong, score);
-		}else trace('BotPlay detected. Score saving is disabled.');
+		}
 	}
 
 	public static function saveCombo(song:String, combo:String, ?diff:Int = 0):Void
@@ -70,7 +70,7 @@ class Highscore
 			}
 			else
 				setScore(daWeek, score);
-		}else trace('BotPlay detected. Score saving is disabled.');
+		}
 	}
 
 	/**

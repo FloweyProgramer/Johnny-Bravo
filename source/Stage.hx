@@ -443,7 +443,7 @@ class Stage
 						swagBacks['bg'] = bg;
 						toAdd.push(bg);
 
-						var crowd:FlxSprite = new FlxSprite(-940, -660).loadGraphic(Paths.image('references', 'johnny'));
+						var crowd:FlxSprite = new FlxSprite(-1120, -660).loadGraphic(Paths.image('references', 'johnny'));
 						crowd.setGraphicSize(Std.int(crowd.width * 1));
 						crowd.updateHitbox();
 						crowd.antialiasing = FlxG.save.data.antialiasing;
@@ -456,7 +456,7 @@ class Stage
 							
 						}
 							
-//
+
 						var signal:FlxSprite = new FlxSprite(-640, -360);
 						signal.frames = Paths.getSparrowAtlas('no_signal', 'johnny');
 						signal.animation.addByPrefix('idle', 'no signal idle', 24, true);
@@ -484,7 +484,7 @@ class Stage
 						toAdd.push(sky);
 
 						var interior:FlxSprite = new FlxSprite().loadGraphic(Paths.image('plane2', 'johnny'));
-						interior.setGraphicSize(Std.int(interior.width * (720/1400)));
+						interior.setGraphicSize(Std.int(interior.width * (720/730)));
 						interior.updateHitbox();
 						interior.antialiasing = FlxG.save.data.antialiasing;
 						interior.scrollFactor.set(1, 1);
@@ -512,21 +512,21 @@ class Stage
 
 
 
-						var smoke:FlxSprite = new FlxSprite(-100);
-						smoke.frames = Paths.getSparrowAtlas('divider', 'johnny');
-						smoke.animation.addByPrefix('idle', 'plane idle', 24, true);
-						smoke.setGraphicSize(Std.int(smoke.width * (720/1404)));
-						smoke.updateHitbox();
-						smoke.animation.play('idle');
-						smoke.antialiasing = FlxG.save.data.antialiasing;
-						smoke.scrollFactor.set(1, 1);
-						smoke.active = true;
-						swagBacks['smoke'] = smoke;
-						toAdd.push(smoke);
-						// toAddSecondary.push(smoke);
+						// var smoke:FlxSprite = new FlxSprite(-100);
+						// smoke.frames = Paths.getSparrowAtlas('divider', 'johnny');
+						// smoke.animation.addByPrefix('idle', 'plane idle', 24, true);
+						// smoke.setGraphicSize(Std.int(smoke.width * (720/1404)));
+						// smoke.updateHitbox();
+						// smoke.animation.play('idle');
+						// smoke.antialiasing = FlxG.save.data.antialiasing;
+						// smoke.scrollFactor.set(1, 1);
+						// smoke.active = true;
+						// swagBacks['smoke'] = smoke;
+						// toAdd.push(smoke);
+						// // toAddSecondary.push(smoke);
 
 
-						var smoke2:FlxSprite = new FlxSprite(1180);
+						var smoke2:FlxSprite = new FlxSprite(500);
 						smoke2.frames = Paths.getSparrowAtlas('divider', 'johnny');
 						smoke2.animation.addByPrefix('idle', 'plane idle', 24, true);
 						smoke2.setGraphicSize(Std.int(smoke2.width * (720/1404)));
@@ -536,7 +536,7 @@ class Stage
 						smoke2.scrollFactor.set(1, 1);
 						smoke2.active = true;
 						swagBacks['smoke2'] = smoke2;
-						smoke2.cameras = [PlayState.camPlane];
+						smoke2.cameras = [PlayState.camSmoke];
 						toAdd.push(smoke2);
 
 					}

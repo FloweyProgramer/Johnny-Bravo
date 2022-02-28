@@ -49,7 +49,7 @@ class MusicBeatState extends FlxUIState
 		(cast (Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);
 
 		if (transIn != null)
-			trace('reg ' + transIn.region);
+			
 
 		super.create();
 	}
@@ -122,7 +122,7 @@ class MusicBeatState extends FlxUIState
 					}
 					else if (ste < curStep)
 					{
-						trace("reset steps for some reason?? at " + Conductor.songPosition);
+						
 						//Song reset?
 						curStep = ste;
 						updateBeat();
@@ -148,7 +148,7 @@ class MusicBeatState extends FlxUIState
 					else if (nextStep < curStep)
 					{
 						//Song reset?
-						trace("(no bpm change) reset steps for some reason?? at " + Conductor.songPosition);
+						
 						curStep = nextStep;
 						updateBeat();
 						stepHit();

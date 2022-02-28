@@ -1,5 +1,6 @@
 package;
 
+import haxe.Log;
 import lime.app.Application;
 #if desktop
 import Discord.DiscordClient;
@@ -25,7 +26,8 @@ class Main extends Sprite
 	var framerate:Int = 120; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
-
+	public static var tracelag:Bool = false; // Whether to show traces or not.
+	public static var copyright:Bool = false; // Whether to play the copyright music or not.
 	public static var watermarks = true; // Whether to put Kade Engine literally anywhere
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
@@ -82,6 +84,16 @@ class Main extends Sprite
 		framerate = 60;
 		#end
 
+		// var oldtrace = Log.trace;
+		// Log.trace = function(v:String, ?infos:haxe.PosInfos):Void
+		// {
+		// 	if (tracelag)
+		// 	{
+		// 		
+		// 	}
+		// }
+		FlxG.debugger.visible = false;
+
 		#if cpp
 		initialState = Caching;
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
@@ -108,6 +120,8 @@ class Main extends Sprite
 	var game:FlxGame;
 
 	var fpsCounter:FPS;
+
+
 
 	public function toggleFPS(fpsEnabled:Bool):Void {
 		fpsCounter.visible = fpsEnabled;
